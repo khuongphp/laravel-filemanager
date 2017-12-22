@@ -1,6 +1,7 @@
 ## Requirements
  * php >= 5.4
  * exif extension
+ * fileinfo extension
  * GD Library >=2.0 or Imagick PHP extension >=6.5.7
  * Laravel 5
  * requires [intervention/image](https://github.com/Intervention/image) (to make thumbs, crop and resize images).
@@ -9,7 +10,7 @@
 1. Install package 
 
     ```bash
-    composer require unisharp/laravel-filemanager
+    composer require unisharp/laravel-filemanager:~1.8
     ```
 
 1. Edit `config/app.php` :

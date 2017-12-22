@@ -1,6 +1,8 @@
 # Laravel Filemanager
-[![Latest Stable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/stable)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Travis CI](https://img.shields.io/travis/UniSharp/laravel-filemanager.svg)](https://travis-ci.org/UniSharp/laravel-filemanager)
 [![Total Downloads](https://poser.pugx.org/unisharp/laravel-filemanager/downloads)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Latest Unstable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/unstable)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Latest Stable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/stable)](https://packagist.org/packages/unisharp/laravel-filemanager)
 [![License](https://poser.pugx.org/unisharp/laravel-filemanager/license)](https://packagist.org/packages/unisharp/laravel-filemanager)
 
  * Document : [unisharp.github.io/laravel-filemanager](http://unisharp.github.io/laravel-filemanager/)
@@ -39,18 +41,34 @@ This approach ensures that only authenticated users have access to the Laravel-F
 
 ## v2.0 progress
 * [x] (done) Unit test
-* [ ] (done, need manual tests) Integrate with Laravel Storage
-* [ ] (in progress) Multiple selection
-* [ ] (in progress) Responsive design
-* [ ] (in progress) Config refactoring
-* [ ] JSON APIs
+* [x] (done) Integrate with Laravel Storage
+* [x] (done) Multiple selection
+* [x] (done) Responsive design
+* [x] (done) Config refactoring
+* [x] (done) JSON APIs
 * [ ] Move to folder function
+* [ ] (in progress) Applying MIME icon generator
+* [x] (done) Configurable disk of storage
+* [x] (done) Bootstrap 4 support
+* [x] (done) Remove bootbox
 
 
-## Credits
-Special thanks to
+## Contributors & Credits
+
+### Developers / Maintainers
+
+ * [Stream](https://github.com/g0110280)
+ * [@gwleuverink](https://github.com/gwleuverink)
+ * All [@UniSharp](https://github.com/UniSharp) members
+
+### Contributors
 
  * [All contibutors](https://github.com/UniSharp/laravel-filemanager/graphs/contributors) from GitHub. (issues / PR)
- * [@taswler](https://github.com/tsawler) the original author.
+ * [@taswler](https://github.com/tsawler) the original author of this package.
+ * Nathan for providing security suggestions.
+
+### Credits
+
  * [@olivervogel](https://github.com/olivervogel) for the awesome [image library](https://github.com/Intervention/image).
- * All [@UniSharp](https://github.com/UniSharp) members.
+ * SVG Loaders by [Sam](http://samherbert.net/svg-loaders/) (Licensed MIT)
+
