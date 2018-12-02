@@ -6,16 +6,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LfmItem
 {
-    private $lfm_path;
     private $lfm;
+    private $helper;
 
-    private $columns = ['name', 'path', 'time', 'icon', 'is_file', 'is_image', 'thumb_url'];
+    private $columns = ['name', 'url', 'time', 'icon', 'is_file', 'is_image', 'thumb_url'];
     public $attributes = [];
 
-    public function __construct(LfmPath $lfm_path, Lfm $lfm)
+    public function __construct(LfmPath $lfm, Lfm $helper)
     {
-        $this->lfm_path = $lfm_path->thumb(false);
-        $this->lfm = $lfm;
+        $this->lfm = $lfm->thumb(false);
+        $this->helper = $helper;
     }
 
     public function __get($var_name)
@@ -39,17 +39,17 @@ class LfmItem
 
     public function name()
     {
-        return $this->lfm_path->getName();
+        return $this->lfm->getName();
     }
 
-    public function absolutePath()
+    public function path($type = 'absolute')
     {
-        return $this->lfm_path->path('absolute');
+        return $this->lfm->path($type);
     }
 
     public function isDirectory()
     {
-        return $this->lfm_path->isDirectory();
+        return $this->lfm->isDirectory();
     }
 
     public function isFile()
@@ -81,31 +81,31 @@ class LfmItem
         //     return $file->getMimeType();
         // }
 
-        return $this->lfm_path->mimeType();
+        return $this->lfm->mimeType();
     }
 
     public function extension()
     {
-        return $this->lfm_path->extension();
+        return $this->lfm->extension();
     }
 
-    public function path()
+    public function url()
     {
         if ($this->isDirectory()) {
-            return $this->lfm_path->path('working_dir');
+            return $this->lfm->path('working_dir');
         }
 
-        return $this->lfm_path->url();
+        return $this->lfm->url();
     }
 
     public function size()
     {
-        return $this->isFile() ? $this->humanFilesize($this->lfm_path->size()) : '';
+        return $this->isFile() ? $this->humanFilesize($this->lfm->size()) : '';
     }
 
     public function time()
     {
-        return $this->lfm_path->lastModified();
+        return $this->lfm->lastModified();
     }
 
     public function thumbUrl()
@@ -115,7 +115,7 @@ class LfmItem
         }
 
         if ($this->isImage()) {
-            return $this->lfm_path->thumb($this->hasThumb())->url(true);
+            return $this->lfm->thumb($this->hasThumb())->url(true);
         }
 
         return null;
@@ -131,7 +131,7 @@ class LfmItem
             return 'fa-image';
         }
 
-        return $this->lfm->getFileIcon($this->extension());
+        return $this->extension();
     }
 
     public function type()
@@ -144,7 +144,7 @@ class LfmItem
             return $this->mimeType();
         }
 
-        return $this->lfm->getFileType($this->extension());
+        return $this->helper->getFileType($this->extension());
     }
 
     public function hasThumb()
@@ -153,15 +153,33 @@ class LfmItem
             return false;
         }
 
-        if (in_array($this->mimeType(), ['image/gif', 'image/svg+xml'])) {
-            return false;
-        }
-
-        if (!$this->lfm_path->thumb()->exists()) {
+        if (!$this->lfm->thumb()->exists()) {
             return false;
         }
 
         return true;
+    }
+
+    public function shouldCreateThumb()
+    {
+        if (!$this->helper->config('should_create_thumbnails')) {
+            return false;
+        }
+
+        if (!$this->isImage()) {
+            return false;
+        }
+
+        if (in_array($this->mimeType(), ['image/gif', 'image/svg+xml'])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function get()
+    {
+        return $this->lfm->get();
     }
 
     /**

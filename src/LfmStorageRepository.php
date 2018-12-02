@@ -3,16 +3,18 @@
 namespace UniSharp\LaravelFilemanager;
 
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Cached\CachedAdapter;
 
 class LfmStorageRepository implements RepositoryContract
 {
     private $disk;
-
     private $path;
+    private $helper;
 
-    public function __construct($storage_path, $disk_name)
+    public function __construct($storage_path, $helper)
     {
-        $this->disk = Storage::disk($disk_name);
+        $this->helper = $helper;
+        $this->disk = Storage::disk($this->helper->config('disk'));
         $this->path = $storage_path;
     }
 
@@ -24,17 +26,13 @@ class LfmStorageRepository implements RepositoryContract
 
     public function rootPath()
     {
-        // storage_path('app')
-        return $this->disk->getDriver()->getAdapter()->getPathPrefix();
-    }
+        $adapter = $this->disk->getDriver()->getAdapter();
 
-    public function isDirectory()
-    {
-        $parent_path = substr($this->path, 0, strrpos($this->path, '/'));
-        $current_path = $this->path;
-        $this->path = $parent_path;
+        if ($adapter instanceof CachedAdapter) {
+            $adapter = $adapter->getAdapter();
+        }
 
-        return in_array($current_path, $this->directories());
+        return $adapter->getPathPrefix();
     }
 
     public function move($new_lfm_path)
@@ -42,8 +40,28 @@ class LfmStorageRepository implements RepositoryContract
         return $this->disk->move($this->path, $new_lfm_path->path('storage'));
     }
 
-    public function save($file, $new_filename)
+    public function save($file)
     {
-        $this->disk->putFileAs($this->path, $file, $new_filename);
+        $nameint = strripos($this->path, "/");
+        $nameclean = substr($this->path, $nameint + 1);
+        $pathclean = substr_replace($this->path, "", $nameint);
+        $this->disk->putFileAs($pathclean, $file, $nameclean, 'public');
+    }
+
+    public function url($path)
+    {
+        return $this->disk->url($path);
+    }
+
+    public function makeDirectory()
+    {
+        $this->disk->makeDirectory($this->path, ...func_get_args());
+
+        $this->disk->setVisibility($this->path, 'public');
+    }
+
+    public function extension()
+    {
+        return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 }
