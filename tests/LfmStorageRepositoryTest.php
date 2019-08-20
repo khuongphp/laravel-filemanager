@@ -5,7 +5,6 @@ namespace Tests;
 use Illuminate\Support\Facades\Storage;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use UniSharp\LaravelFilemanager\Lfm;
 use UniSharp\LaravelFilemanager\LfmPath;
 use UniSharp\LaravelFilemanager\LfmStorageRepository;
 
@@ -25,12 +24,9 @@ class LfmStorageRepositoryTest extends TestCase
         $disk->shouldReceive('directories')->with('foo')->andReturn(['foo/bar']);
         $disk->shouldReceive('move')->with('foo/bar', 'foo/bar/baz')->andReturn(true);
 
-        $helper = m::mock(Lfm::class);
-        $helper->shouldReceive('config')->with('disk')->andReturn('local');
+        Storage::shouldReceive('disk')->andReturn($disk);
 
-        Storage::shouldReceive('disk')->with('local')->andReturn($disk);
-
-        $this->storage = new LfmStorageRepository('foo/bar', $helper);
+        $this->storage = new LfmStorageRepository('foo/bar', 'local');
     }
 
     public function tearDown()
@@ -38,7 +34,7 @@ class LfmStorageRepositoryTest extends TestCase
         m::close();
     }
 
-    public function testMagicCall()
+    public function test__Call()
     {
         $this->assertEquals('baz', $this->storage->functionToCall());
     }
@@ -46,6 +42,11 @@ class LfmStorageRepositoryTest extends TestCase
     public function testRootPath()
     {
         $this->assertEquals('foo/bar', $this->storage->rootPath());
+    }
+
+    public function testIsDirectory()
+    {
+        $this->assertTrue($this->storage->isDirectory());
     }
 
     public function testMove()
