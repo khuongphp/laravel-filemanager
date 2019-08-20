@@ -2,6 +2,7 @@
 
 namespace UniSharp\LaravelFilemanager;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -16,6 +17,10 @@ class LaravelFilemanagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (Config::get('lfm.use_package_routes')) {
+            include __DIR__ . '/routes.php';
+        }
+
         $this->loadTranslationsFrom(__DIR__.'/lang', 'laravel-filemanager');
 
         $this->loadViewsFrom(__DIR__.'/views', 'laravel-filemanager');
@@ -35,10 +40,6 @@ class LaravelFilemanagerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Handlers/LfmConfigHandler.php' => base_path('app/Handlers/LfmConfigHandler.php'),
         ], 'lfm_handler');
-        
-        if(config('lfm.use_package_routes')) {
-            \UniSharp\LaravelFilemanager\Lfm::routes();
-        }
     }
 
     /**

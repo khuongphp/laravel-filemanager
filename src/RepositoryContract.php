@@ -8,5 +8,5 @@ interface RepositoryContract
 
     public function move($new_lfm_path);
 
-    public function save($file);
+    public function save($file, $new_filename);
 }

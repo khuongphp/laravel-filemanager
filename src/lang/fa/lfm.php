@@ -14,7 +14,6 @@ return [
     'menu-delete'       => 'حذف',
     'menu-view'         => 'مشاهده',
     'menu-download'     => 'دانلود',
-    'menu-move'         => 'انتقال',
     'menu-resize'       => 'تغییر اندازه',
     'menu-crop'         => 'برش',
 

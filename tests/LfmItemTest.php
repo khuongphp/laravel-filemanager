@@ -28,7 +28,7 @@ class LfmItemTest extends TestCase
         parent::tearDown();
     }
 
-    public function testMagicGet()
+    public function test__Get()
     {
         $this->lfm_item = new LfmItem($this->lfm_path, m::mock(Lfm::class));
 
@@ -52,7 +52,7 @@ class LfmItemTest extends TestCase
 
         $item = new LfmItem($this->lfm_path, $this->lfm);
 
-        $this->assertEquals('foo/bar.baz', $item->path());
+        $this->assertEquals('foo/bar.baz', $item->absolutePath());
     }
 
     public function testIsDirectory()
@@ -126,7 +126,7 @@ class LfmItemTest extends TestCase
     }
 
     // TODO: refactor
-    public function testUrl()
+    public function testPath()
     {
         $this->lfm_path->shouldReceive('isDirectory')->andReturn(false);
         $this->lfm_path->shouldReceive('getName')->andReturn('bar');
@@ -135,7 +135,7 @@ class LfmItemTest extends TestCase
 
         $item = new LfmItem($this->lfm_path, $this->lfm);
 
-        $this->assertEquals('foo/bar', $item->url());
+        $this->assertEquals('foo/bar', $item->path());
     }
 
     public function testSize()
@@ -168,7 +168,7 @@ class LfmItemTest extends TestCase
 
         $item = new LfmItem($this->lfm_path, $this->lfm);
 
-        $this->assertEquals('baz', $item->icon());
+        $this->assertEquals('fa-file', $item->icon());
 
         // $path1 = m::mock(LfmPath::class);
         // $path1->shouldReceive('path')->with('absolute')->andReturn('foo/bar');

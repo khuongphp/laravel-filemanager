@@ -19,7 +19,7 @@
     },
     {
       "name": "UniSharp Ltd.",
-      "email": "opensource@unisharp.com"
+      "email": "unisharp-service@unisharp.com"
     }
   ],
   "require": {
@@ -27,11 +27,12 @@
     "ext-exif": "*",
     "ext-fileinfo": "*",
     "intervention/image": "2.*",
-    "illuminate/config": "5.4.* || 5.5.* || 5.6.* || 5.7.*",
-    "illuminate/filesystem": "5.4.* || 5.5.* || 5.6.* || 5.7.*",
-    "illuminate/support": "5.4.* || 5.5.* || 5.6.* || 5.7.*",
-    "illuminate/http": "5.4.* || 5.5.* || 5.6.* || 5.7.*",
-    "illuminate/container": "5.4.* || 5.5.* || 5.6.* || 5.7.*"
+    "illuminate/config": ">=5.1.0",
+    "illuminate/filesystem": ">=5.1.0",
+    "illuminate/support": ">=5.1.0",
+    "illuminate/http": ">=5.1.0",
+    "illuminate/container": "^5.4",
+    "unisharp/laravel-fileapi": ">=1.0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.2",
@@ -55,7 +56,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider"
+        "Unisharp\\Laravelfilemanager\\LaravelFilemanagerServiceProvider"
       ],
       "aliases": {
       }

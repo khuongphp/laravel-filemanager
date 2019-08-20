@@ -20,7 +20,7 @@
     Add service providers
 
     ```php
-    UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+    Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
     Intervention\Image\ImageServiceProvider::class,
     ```
 
@@ -32,16 +32,6 @@
 
     Code above is for Laravel 5.1.
     In Laravel 5.0 should leave only quoted class names.
-
-1. (Alpha version only) Edit `routes/web.php` :
-
-    Create route group to wrap package routes
-
-    ```php
-    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-        \UniSharp\LaravelFilemanager\Lfm::routes();
-    });
-    ```
 
 1. Publish the package's config and assets :
 
@@ -58,14 +48,6 @@
     ```
     
 1. Ensure that the files & images directories (in `config/lfm.php`) are writable by your web server (run commands like `chown` or `chmod`).
-
-1. Create symbolic link : 
-
-    ```bash
-    php artisan storage:link
-    ```
-
-1. Edit `APP_URL` in `.env`.
 
 ## What's next
 

@@ -1,41 +1,18 @@
-<p align="center"><img src="https://unisharp.github.io/laravel-filemanager/images/logo_vertical_colored.png"></p>
+# Laravel Filemanager
+[![Travis CI](https://img.shields.io/travis/UniSharp/laravel-filemanager.svg)](https://travis-ci.org/UniSharp/laravel-filemanager)
+[![Total Downloads](https://poser.pugx.org/unisharp/laravel-filemanager/downloads)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Latest Unstable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/unstable)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![Latest Stable Version](https://poser.pugx.org/unisharp/laravel-filemanager/v/stable)](https://packagist.org/packages/unisharp/laravel-filemanager)
+[![License](https://poser.pugx.org/unisharp/laravel-filemanager/license)](https://packagist.org/packages/unisharp/laravel-filemanager)
 
-<p align="center">
-  <a target="_blank" href="https://travis-ci.org/UniSharp/laravel-filemanager"><img src="https://img.shields.io/travis/UniSharp/laravel-filemanager.svg"></a>
-  <a target="_blank" href="https://packagist.org/packages/unisharp/laravel-filemanager"><img src="https://poser.pugx.org/unisharp/laravel-filemanager/downloads"></a>
-  <a target="_blank" href="https://packagist.org/packages/unisharp/laravel-filemanager"><img src="https://img.shields.io/badge/unstable-v2.0.0--alpha5-orange.svg"></a>
-  <a target="_blank" href="https://packagist.org/packages/unisharp/laravel-filemanager"><img src="https://poser.pugx.org/unisharp/laravel-filemanager/v/stable"></a>
-  <a target="_blank" href="https://packagist.org/packages/unisharp/laravel-filemanager"><img src="https://poser.pugx.org/unisharp/laravel-filemanager/license"></a>
-</p>
-
-<p align="center">
-  <a href="http://unisharp.github.io/laravel-filemanager/">Documents</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/installation">Installation</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/integration">Integration</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/config">Config</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/customization">Customization</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/events">Events</a>
-・
-  <a href="http://unisharp.github.io/laravel-filemanager/upgrade">Upgrade</a>
-・
-  <a href="https://github.com/UniSharp/laravel-filemanager-example-5.3">Demo</a>
-</p>
-
-## Installing alpha version
-The alpha version of `v2.0` contains support of cloud storage and fresh new UI with RWD.
-
- * Run `composer require unisharp/laravel-filemanager:dev-master` to get the latest code.
- * Run `composer require unisharp/laravel-filemanager:v2.0.0-alpha5` to get the latest release of alpha version.
-
-## Errors with namespace
-We have changed namespace from `Unisharp` to `UniSharp`, and change the first character of every namespace into capital.
-
-If you are updating this package and encounter any errors like `Class not found`, please remove this package entirely and reinstall again.
+ * Document : [unisharp.github.io/laravel-filemanager](http://unisharp.github.io/laravel-filemanager/)
+   * [Installation](http://unisharp.github.io/laravel-filemanager/installation)
+   * [Integration](http://unisharp.github.io/laravel-filemanager/integration)
+   * [Config](http://unisharp.github.io/laravel-filemanager/config)
+   * [Customization](http://unisharp.github.io/laravel-filemanager/customization)
+   * [Events](http://unisharp.github.io/laravel-filemanager/events)
+   * [Upgrade](http://unisharp.github.io/laravel-filemanager/upgrade)
+ * Demo : [Laravel Filemanager container](https://github.com/UniSharp/laravel-filemanager-example-5.3)
 
 ## v1.8 released
  * Please follow the intructions in [upgrade document](https://unisharp.github.io/laravel-filemanager/upgrade).
@@ -52,8 +29,8 @@ If, for example, you want to ensure that only logged in users have the ability t
 
 ```php
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
-    Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
+    Route::get('/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
     // list all lfm routes here...
 });
 ```
@@ -69,13 +46,11 @@ This approach ensures that only authenticated users have access to the Laravel-F
 * [x] (done) Responsive design
 * [x] (done) Config refactoring
 * [x] (done) JSON APIs
-* [x] (done) Move to folder function
-* [x] (done) Applying MIME icon generator
-* [x] (done) Refactor floating action buttons
+* [ ] Move to folder function
+* [ ] (in progress) Applying MIME icon generator
 * [x] (done) Configurable disk of storage
 * [x] (done) Bootstrap 4 support
 * [x] (done) Remove bootbox
-* [ ] Documents for v2.0
 
 
 ## Contributors & Credits
@@ -91,12 +66,9 @@ This approach ensures that only authenticated users have access to the Laravel-F
  * [All contibutors](https://github.com/UniSharp/laravel-filemanager/graphs/contributors) from GitHub. (issues / PR)
  * [@taswler](https://github.com/tsawler) the original author of this package.
  * Nathan for providing security suggestions.
- * [@mdnazmulhasan27771](https://github.com/mdnazmulhasan27771) the designer of our logo. (Licensed CC BY 4.0)
 
 ### Credits
 
  * [@olivervogel](https://github.com/olivervogel) for the awesome [image library](https://github.com/Intervention/image).
  * SVG Loaders by [Sam](http://samherbert.net/svg-loaders/) (Licensed MIT)
- * Articles and videos which helped promoting this package.
- * All users and you.
 

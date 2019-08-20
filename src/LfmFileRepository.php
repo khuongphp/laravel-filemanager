@@ -2,30 +2,27 @@
 
 namespace UniSharp\LaravelFilemanager;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
-class LfmStorageRepository implements RepositoryContract
+class LfmFileRepository implements RepositoryContract
 {
-    private $disk;
-
     private $path;
 
-    public function __construct($storage_path, $disk_name)
+    public function __construct($storage_path)
     {
-        $this->disk = Storage::disk($disk_name);
         $this->path = $storage_path;
     }
 
     public function __call($function_name, $arguments)
     {
         // TODO: check function exists
-        return $this->disk->$function_name($this->path, ...$arguments);
+        return File::$function_name($this->path, ...$arguments);
     }
 
+    // TODO: check ending with slash in tests
     public function rootPath()
     {
-        // storage_path('app')
-        return $this->disk->getDriver()->getAdapter()->getPathPrefix();
+        return public_path() . '/';
     }
 
     public function isDirectory()
@@ -39,11 +36,11 @@ class LfmStorageRepository implements RepositoryContract
 
     public function move($new_lfm_path)
     {
-        return $this->disk->move($this->path, $new_lfm_path->path('storage'));
+        return File::move($this->path, $new_lfm_path->path('storage'));
     }
 
     public function save($file, $new_filename)
     {
-        $this->disk->putFileAs($this->path, $file, $new_filename);
+        File::move($file->getRealPath(), $this->path . '/' . $new_filename);
     }
 }

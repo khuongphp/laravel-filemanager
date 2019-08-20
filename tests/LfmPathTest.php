@@ -18,7 +18,7 @@ class LfmPathTest extends TestCase
         parent::tearDown();
     }
 
-    public function testMagicGet()
+    public function test__Get()
     {
         $storage = m::mock(LfmStorage::class);
 
@@ -34,7 +34,7 @@ class LfmPathTest extends TestCase
         $this->assertEquals($storage, $path->storage);
     }
 
-    public function testMagicCall()
+    public function test__Call()
     {
         $storage = m::mock(LfmStorage::class);
         $storage->shouldReceive('foo')->andReturn('bar');
@@ -96,16 +96,10 @@ class LfmPathTest extends TestCase
     public function testUrl()
     {
         $helper = m::mock(Lfm::class);
-        $helper->shouldReceive('getRootFolder')->andReturn('/foo');
-        $helper->shouldReceive('input')->with('working_dir')->andReturnNull();
+        $helper->shouldReceive('getRootFolder')->once()->andReturn('/foo');
+        $helper->shouldReceive('input')->with('working_dir')->once()->andReturnNull();
         $helper->shouldReceive('getCategoryName')->andReturn('files');
         $helper->shouldReceive('isRunningOnWindows')->andReturn(false);
-        $helper->shouldReceive('ds')->andReturn('/');
-
-        $storage = m::mock(LfmStorage::class);
-        $storage->shouldReceive('url')->andReturn('/files/foo/foo');
-
-        $helper->shouldReceive('getStorage')->andReturn($storage);
 
         $path = new LfmPath($helper);
 
@@ -162,6 +156,39 @@ class LfmPathTest extends TestCase
         $this->assertInstanceOf(LfmItem::class, $path->pretty('foo'));
     }
 
+    public function testDelete()
+    {
+        $storage = m::mock(LfmStorage::class);
+        $storage->shouldReceive('isDirectory')->andReturn(true);
+        $storage->shouldReceive('deleteDirectory')->andReturn('folder_deleted');
+
+        $helper = m::mock(Lfm::class);
+        $helper->shouldReceive('getStorage')->with('files/bar')->andReturn($storage);
+        $helper->shouldReceive('getCategoryName')->andReturn('files');
+        $helper->shouldReceive('input')->with('working_dir')->andReturn('/bar');
+        $helper->shouldReceive('isRunningOnWindows')->andReturn(false);
+        $helper->shouldReceive('ds')->andReturn('/');
+
+        $path1 = new LfmPath($helper);
+
+        $this->assertEquals('folder_deleted', $path1->delete());
+
+        $storage = m::mock(LfmStorage::class);
+        $storage->shouldReceive('isDirectory')->andReturn(false);
+        $storage->shouldReceive('delete')->andReturn('file_deleted');
+
+        $helper = m::mock(Lfm::class);
+        $helper->shouldReceive('getStorage')->with('files/bar')->andReturn($storage);
+        $helper->shouldReceive('getCategoryName')->andReturn('files');
+        $helper->shouldReceive('input')->with('working_dir')->andReturn('/bar');
+        $helper->shouldReceive('isRunningOnWindows')->andReturn(false);
+        $helper->shouldReceive('ds')->andReturn('/');
+
+        $path2 = new LfmPath($helper);
+
+        $this->assertEquals('file_deleted', $path2->delete());
+    }
+
     public function testCreateFolder()
     {
         $storage = m::mock(LfmStorage::class);
@@ -178,7 +205,7 @@ class LfmPathTest extends TestCase
 
         $path = new LfmPath($helper);
 
-        $this->assertNull($path->createFolder('bar'));
+        $this->assertTrue($path->createFolder('bar'));
     }
 
     public function testCreateFolderButFolderAlreadyExists()
